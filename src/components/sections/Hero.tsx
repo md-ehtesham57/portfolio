@@ -3,14 +3,14 @@
 import { motion } from "framer-motion";
 import Container from "../ui/Container";
 import { container, fadeInUp } from "@/lib/motion";
-import ParticlesBackground from "../animations/ParticlesBackground";
+import PremiumBackground from "../animations/PremiumBackground";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
 
       {/* ✅ BACKGROUND — FULL WIDTH */}
-      <ParticlesBackground />
+      <PremiumBackground />
 
       {/* OPTIONAL overlay for readability */}
       <div className="absolute inset-0 bg-black/40 z-0" />
@@ -28,7 +28,7 @@ export default function Hero() {
               variants={fadeInUp}
               className="text-4xl md:text-6xl font-bold leading-tight"
             >
-              Hi, I'm <span className="text-primary">Your Name</span>
+              Hi, I'm <span className="text-primary">Md Ehtesham</span>
             </motion.h1>
 
             <motion.p
