@@ -2,62 +2,77 @@
 
 import { motion } from "framer-motion";
 import Container from "../ui/Container";
-import { container, fadeInUp } from "@/lib/motion";
 import PremiumBackground from "../animations/PremiumBackground";
+import { useTypewriter } from "@/hooks/useTypewriter";
+import Cursor from "../shared/Cursor";
+import { staggerContainer, fadeInUp } from "@/lib/motion";
+import ProjectPreview from "./ProjectPreview";
 
 export default function Hero() {
+  const name = useTypewriter("Md Ehtesham");
+  const role = useTypewriter("Frontend-focused developer");
+  const focus = useTypewriter("Building interactive web applications");
+  const status = useTypewriter("Available for opportunities");
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+<section className="relative min-h-screen flex items-center overflow-hidden">
+  
+  <PremiumBackground />
 
-      {/* ✅ BACKGROUND — FULL WIDTH */}
-      <PremiumBackground />
+  <Container>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative z-10">
 
-      {/* OPTIONAL overlay for readability */}
-      <div className="absolute inset-0 bg-black/40 z-0" />
+      {/* LEFT — Terminal Content */}
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="show"
+        className="font-mono space-y-6 text-green-400"
+      >
+        <motion.div variants={fadeInUp}>
+          <span className="text-gray-500">{">"} whoami</span>
+          <div className="text-white text-3xl md:text-5xl font-bold">
+            {name}
+            <Cursor />
+          </div>
+        </motion.div>
 
-      {/* ✅ CONTENT */}
-      <Container>
-        <div className="relative z-10">
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="space-y-6"
-          >
-            <motion.h1
-              variants={fadeInUp}
-              className="text-4xl md:text-6xl font-bold leading-tight"
-            >
-              Hi, I'm <span className="text-primary">Md Ehtesham</span>
-            </motion.h1>
+        <motion.div variants={fadeInUp}>
+          <span className="text-gray-500">{">"} role</span>
+          <div className="text-green-400">{role}</div>
+        </motion.div>
 
-            <motion.p
-              variants={fadeInUp}
-              className="text-lg md:text-xl text-muted-foreground max-w-2xl"
-            >
-              Frontend-focused developer building interactive, backend-powered web applications.
-            </motion.p>
+        <motion.div variants={fadeInUp}>
+          <span className="text-gray-500">{">"} focus</span>
+          <div className="text-gray-300">{focus}</div>
+        </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex gap-4">
-              <a
-                href="#projects"
-                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg text-sm font-medium transition-transform duration-300 hover:scale-105"
-              >
-                View Projects
-              </a>
+        <motion.div variants={fadeInUp}>
+          <span className="text-gray-500">{">"} status</span>
+          <div className="text-green-400">
+            {status}
+            <Cursor />
+          </div>
+        </motion.div>
 
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                className="px-6 py-3 border border-border rounded-lg text-sm font-medium transition-all duration-300 hover:bg-muted hover:scale-105"
-              >
-                Download Resume
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
-      </Container>
+        <motion.div variants={fadeInUp} className="flex gap-4 pt-4">
+          <a className="px-6 py-3 border border-green-500 text-green-400 rounded-md hover:bg-green-500/10 transition">
+            &gt; view_projects
+          </a>
 
-    </section>
+          <a className="px-6 py-3 border border-gray-600 text-gray-300 rounded-md hover:border-green-400 hover:text-green-400 transition">
+            &gt; download_resume
+          </a>
+        </motion.div>
+      </motion.div>
+
+      {/* RIGHT — Project Preview */}
+      <div className="flex justify-center items-center w-full">
+        <ProjectPreview />
+      </div>
+
+    </div>
+  </Container>
+</section>
   );
 }
