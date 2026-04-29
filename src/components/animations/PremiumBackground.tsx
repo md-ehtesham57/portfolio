@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function PremiumBackground() {
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden bg-[#020617]">
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-[#020617]">
 
       {/* Base gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#020617] via-black to-[#020617]" />

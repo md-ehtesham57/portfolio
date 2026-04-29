@@ -25,7 +25,7 @@ export default function ProjectPreview() {
 
         return (
           <motion.div
-            key={project.id} // ✅ Better keying
+            key={project.id}
             className="absolute inset-0 rounded-xl overflow-hidden bg-black border border-green-700 shadow-2xl"
             initial={false}
             animate={{
@@ -40,7 +40,7 @@ export default function ProjectPreview() {
           >
             <img
               src={project.src}
-              alt={project.title} // ✅ Descriptive alt text
+              alt={project.title}
               className="w-full h-full object-cover"
             />
           </motion.div>
