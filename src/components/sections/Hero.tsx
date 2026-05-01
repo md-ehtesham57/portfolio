@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Container from "../ui/Container";
-import PremiumBackground from "../animations/PremiumBackground";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import Cursor from "../shared/Cursor";
 import { staggerContainer, fadeInUp } from "@/lib/motion";
@@ -15,14 +14,12 @@ export default function Hero() {
   const status = useTypewriter("Available for opportunities");
 
   return (
-    <section className="relative min-h-auto md:min-h-[85vh] flex flex-col justify-center pt-16 md:pt-24 overflow-hidden">
-
-      <PremiumBackground />
+    <section className="min-h-[85vh] flex items-center">
 
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
 
-          {/* LEFT — Terminal Content */}
+          {/* LEFT */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -55,23 +52,28 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-col md:flex-row gap-6 pt-4 w-full">
-              <a className="w-full md:w-auto text-center px-6 py-3 border border-green-500 text-green-400 rounded-md hover:bg-green-500/10 transition">
-                &gt; view_projects
+            {/* Buttons */}
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-col md:flex-row gap-4 pt-4 w-full"
+            >
+              <a href="/projects" className="w-full md:w-auto text-center px-6 py-3 border border-green-500 text-green-400 rounded-md hover:bg-green-500/10 transition">
+                &gt; View_projects
               </a>
 
-              <a className="w-full md:w-auto text-center px-6 py-3 border border-gray-600 text-gray-300 rounded-md hover:border-green-400 hover:text-green-400 transition">
-                &gt; download_resume
+              <a href="https://shorturl.at/uKWXm" className="w-full md:w-auto text-center px-6 py-3 border border-gray-600 text-gray-300 rounded-md hover:border-green-400 hover:text-green-400 transition">
+                &gt; Download_resume
               </a>
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — Project Preview (Takes 7 columns for a HUGE look) */}
+          {/* RIGHT */}
           <div className="flex justify-center md:justify-end items-center w-full mt-6 md:mt-0">
             <div className="w-full max-w-[260px] md:max-w-[420px]">
               <ProjectPreview />
             </div>
           </div>
+
         </div>
       </Container>
     </section>
