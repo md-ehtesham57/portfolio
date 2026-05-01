@@ -16,14 +16,14 @@ export default function Navbar() {
 
           {/* Links */}
           <div className="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
-            <Link href="#projects" className="hover:text-emerald-400 transition-colors">
-              <span className="text-emerald-500/50 mr-1">//</span> projects
+            <Link href="/projects" className="hover:text-emerald-400 transition-colors">
+              <span className="text-emerald-500/50 mr-1">//</span> Projects
             </Link>
-            <Link href="#about" className="hover:text-emerald-400 transition-colors">
-              <span className="text-emerald-500/50 mr-1">//</span> about
+            <Link href="/about" className="hover:text-emerald-400 transition-colors">
+              <span className="text-emerald-500/50 mr-1">//</span> About
             </Link>
-            <Link href="#contact" className="hover:text-emerald-400 transition-colors">
-              <span className="text-emerald-500/50 mr-1">//</span> contact
+            <Link href="/contact" className="hover:text-emerald-400 transition-colors">
+              <span className="text-emerald-500/50 mr-1">//</span> Contact
             </Link>
           </div>
         </div>

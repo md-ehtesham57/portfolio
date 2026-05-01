@@ -55,12 +55,12 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-col md:flex-row gap-4 pt-4 w-full">
-              <a className="w-full sm:w-auto text-center px-6 py-3 border border-green-500 text-green-400 rounded-md hover:bg-green-500/10 transition">
+            <motion.div variants={fadeInUp} className="flex flex-col md:flex-row gap-6 pt-4 w-full">
+              <a className="w-full md:w-auto text-center px-6 py-3 border border-green-500 text-green-400 rounded-md hover:bg-green-500/10 transition">
                 &gt; view_projects
               </a>
 
-              <a className="w-full sm:w-auto text-center px-6 py-3 border border-gray-600 text-gray-300 rounded-md hover:border-green-400 hover:text-green-400 transition">
+              <a className="w-full md:w-auto text-center px-6 py-3 border border-gray-600 text-gray-300 rounded-md hover:border-green-400 hover:text-green-400 transition">
                 &gt; download_resume
               </a>
             </motion.div>
