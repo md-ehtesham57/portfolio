@@ -55,7 +55,7 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex gap-4 pt-4">
+            <motion.div variants={fadeInUp} className="flex flex-col md:flex-row gap-4 pt-4 w-full">
               <a className="w-full sm:w-auto text-center px-6 py-3 border border-green-500 text-green-400 rounded-md hover:bg-green-500/10 transition">
                 &gt; view_projects
               </a>
