@@ -1,15 +1,49 @@
+"use client"
+import { useState } from "react";
 import Container from "@/components/ui/Container";
 
 export default function ContactPage() {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      // 2. Connect to your local backend
+      const response = await fetch("http://localhost:5000/api/contact/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        (e.target as HTMLFormElement).reset(); // Clear form on success
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Connection Error:", err);
+      setStatus("error");
+    }
+  };
   return (
     <section className="min-h-screen pt-6 pb-20 overflow-hidden flex flex-col">
       <Container>
         {/* Main Content Grid - Centered on Y-Axis */}
         <div className="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center px-4">
-          
+
           {/* Narrative & Heading - Combined and Vertically Centered */}
           <div className="flex flex-col justify-center space-y-10">
-            
+
             {/* Heading Integrated Here */}
             <div className="font-mono">
               <span className="text-emerald-500 text-lg">{">"} touch contact.json</span>
@@ -20,10 +54,10 @@ export default function ContactPage() {
 
             <div className="font-mono text-base text-zinc-400 leading-relaxed space-y-8">
               <p>
-                Have a project in mind or want to discuss <span className="text-emerald-400">Backend Architectures</span>? 
+                Have a project in mind or want to discuss <span className="text-emerald-400">Backend Architectures</span>?
                 I&apos;m always open to collaborating on innovative web platforms or systems-level tools.
               </p>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center gap-4 text-zinc-300">
                   <span className="text-emerald-500 text-xs uppercase tracking-widest min-w-[100px]">[ email ]</span>
@@ -55,36 +89,69 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form - The Vertical Anchor */}
+          {/* Right Side Form Box */}
           <div className="relative group">
-             <div className="absolute inset-0 bg-emerald-500/5 blur-3xl opacity-50 group-hover:opacity-80 transition-opacity" />
-             
-             <div className="relative border border-emerald-500/20 rounded-3xl p-8 bg-zinc-900/60 backdrop-blur-xl">
-                <h3 className="text-emerald-400 font-mono text-sm mb-8 uppercase tracking-[0.2em] text-center">
-                  [ send_message ]
-                </h3>
-                
-                <form className="space-y-5 font-mono text-xs text-zinc-300">
-                  <div className="space-y-2">
-                    <label className="text-zinc-500 text-[10px] uppercase">name.str</label>
-                    <input type="text" className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500/50 text-white transition-all" placeholder="Enter name..." />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-zinc-500 text-[10px] uppercase">email.str</label>
-                    <input type="email" className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500/50 text-white transition-all" placeholder="Enter email..." />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-zinc-500 text-[10px] uppercase">payload.msg</label>
-                    <textarea rows={4} className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500/50 text-white transition-all resize-none" placeholder="Enter message payload..." />
-                  </div>
+            <div className="absolute inset-0 bg-emerald-500/5 blur-3xl opacity-50" />
 
-                  <div className="mt-8">
-                    <button className="w-full py-4 border border-emerald-500/30 text-emerald-400 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all duration-300 font-mono text-[10px] uppercase tracking-[0.3em] rounded-xl">
-                      SUBMIT_PAYLOAD.sh
-                    </button>
-                  </div>
-                </form>
-             </div>
+            <div className="relative border border-emerald-500/20 rounded-3xl p-8 bg-zinc-900/60 backdrop-blur-xl">
+              <h3 className="text-emerald-400 font-mono text-sm mb-8 uppercase tracking-[0.2em] text-center">
+                [ {status === "success" ? "payload_delivered" : "send_message"} ]
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-5 font-mono text-xs text-zinc-300">
+                <div className="space-y-2">
+                  <label className="text-zinc-500 text-[10px] uppercase">name.str</label>
+                  <input
+                    name="name"
+                    required
+                    type="text"
+                    className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:border-emerald-500/50 text-white outline-none transition-all"
+                    placeholder="Enter name..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-zinc-500 text-[10px] uppercase">email.str</label>
+                  <input
+                    name="email"
+                    required
+                    type="email"
+                    className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:border-emerald-500/50 text-white outline-none transition-all"
+                    placeholder="Enter email..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-zinc-500 text-[10px] uppercase">payload.msg</label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={4}
+                    className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:border-emerald-500/50 text-white outline-none transition-all resize-none"
+                    placeholder="Enter message..."
+                  />
+                </div>
+
+                <div className="mt-8">
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="w-full py-4 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 transition-all font-mono text-[10px] uppercase tracking-[0.3em] rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {status === "sending" ? "EXECUTING_PAYLOAD..." : "SUBMIT_PAYLOAD.sh"}
+                  </button>
+                </div>
+
+                {status === "error" && (
+                  <p className="text-red-500 text-[10px] text-center mt-2 uppercase tracking-widest animate-pulse">
+                    ! Error: delivery_failed
+                  </p>
+                )}
+                {status === "success" && (
+                  <p className="text-emerald-500 text-[10px] text-center mt-2 uppercase tracking-widest">
+                    ✓ Success: message_sent
+                  </p>
+                )}
+              </form>
+            </div>
           </div>
         </div>
       </Container>
