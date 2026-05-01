@@ -46,7 +46,7 @@ export default function ContactPage() {
                 </span>
                 <span className="text-white font-bold text-lg font-mono">GitHub</span>
               </a>
-              <a href="#" className="p-6 rounded-2xl border border-emerald-500/10 bg-zinc-900/40 backdrop-blur-sm hover:border-emerald-500/30 transition-all group">
+              <a href="https://www.linkedin.com/in/md-ehtesham-153344259/" className="p-6 rounded-2xl border border-emerald-500/10 bg-zinc-900/40 backdrop-blur-sm hover:border-emerald-500/30 transition-all group">
                 <span className="block text-emerald-500 font-mono text-[10px] mb-2 uppercase tracking-widest group-hover:text-emerald-400">
                   # professional_net
                 </span>
