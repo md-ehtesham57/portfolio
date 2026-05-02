@@ -41,14 +41,20 @@ export default function Navbar() {
           </button>
         </div>
       </Container>
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 top-[72px] bg-black/40 backdrop-blur-sm z-40"
+        />
+      )}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="md:hidden mt-4"
+            className="md:hidden mt-4 relative z-50"
           >
             <Container>
               <div className="flex flex-col gap-4 p-4 rounded-2xl border border-emerald-500/20 bg-black/80 backdrop-blur-md">
@@ -59,7 +65,7 @@ export default function Navbar() {
                     onClick={() => setOpen(false)}
                     className="block w-full text-center px-6 py-3 rounded-full border border-emerald-500/20 text-zinc-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all"
                   >
-              // Projects
+                    Projects
                   </Link>
                 </motion.div>
 
@@ -69,7 +75,7 @@ export default function Navbar() {
                     onClick={() => setOpen(false)}
                     className="block w-full text-center px-6 py-3 rounded-full border border-emerald-500/20 text-zinc-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all"
                   >
-              // About
+                    About
                   </Link>
                 </motion.div>
 
@@ -79,7 +85,7 @@ export default function Navbar() {
                     onClick={() => setOpen(false)}
                     className="block w-full text-center px-6 py-3 rounded-full border border-emerald-500/20 text-zinc-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all"
                   >
-              // Contact
+                    Contact
                   </Link>
                 </motion.div>
 
@@ -88,6 +94,7 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </nav>
   );
 }
