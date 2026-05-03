@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 pt-4">
       <Container>
-        <div className="flex items-center justify-between h-14 px-6 rounded-full border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)] bg-black/60 backdrop-blur-md transition-all hover:border-emerald-500/50">
+        <div className="flex items-center justify-between h-14 px-4 rounded-full border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)] bg-black/60 backdrop-blur-md transition-all hover:border-emerald-500/50">
 
           {/* Logo */}
           <Link href="/" className="text-md font-bold tracking-tighter hover:text-emerald-400 transition-all">

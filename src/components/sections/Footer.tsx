@@ -5,7 +5,7 @@ export default function Footer() {
         <footer className="py-6 relative">
 
             <Container>
-                <div className="relative rounded-2xl border border-emerald-500/20 bg-black/40 backdrop-blur-md px-6 py-10 md:px-10">
+                <div className="relative rounded-2xl border border-emerald-500/20 bg-black/40 backdrop-blur-md px-6 py-8">
 
                     {/* GRID */}
                     <div className="flex flex-col md:flex-row justify-between items-center gap-10">

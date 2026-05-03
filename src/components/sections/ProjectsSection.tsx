@@ -39,7 +39,7 @@ export default function ProjectsSection() {
         {/* Terminal Style Heading */}
         <div className="mb-8 font-mono relative z-10">
           <span className="text-emerald-500 text-lg">{">"} ls</span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mt-2 tracking-tighter">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mt-2 tracking-tighter break-words">
             ./my_work<span className="animate-pulse text-emerald-500">_</span>
           </h1>
         </div>
@@ -60,7 +60,7 @@ export default function ProjectsSection() {
                   0{index + 1} // project_build
                 </span>
                 
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
+                <h2 className="text-2xl font-bold text-white mb-3 break-words">
                   {project.title}
                 </h2>
 
@@ -81,7 +81,7 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Links styled like Terminal Buttons */}
-                <div className="flex gap-6 font-mono text-xs tracking-widest">
+                <div className="flex flex-wrap gap-4 font-mono text-xs tracking-widest">
                   <a href={project.github} className="text-zinc-500 hover:text-emerald-400 transition-all">
                     [ GITHUB ]
                   </a>

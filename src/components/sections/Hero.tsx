@@ -15,7 +15,10 @@ export default function Hero() {
 
   return (
     <section className="pt-6 pb-6 overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 
+-translate-x-1/2 -translate-y-1/2 
+w-[80vw] max-w-[600px] aspect-square 
+bg-green-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
