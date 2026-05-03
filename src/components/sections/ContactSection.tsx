@@ -3,7 +3,7 @@ import { useState } from "react";
 import Container from "@/components/ui/Container";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error" | "ratelimit">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,16 +17,19 @@ export default function ContactPage() {
     };
 
     try {
-      // 2. Connect to your local backend
       const response = await fetch("http://localhost:5000/api/contact/send", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
       if (response.ok) {
         setStatus("success");
-        (e.target as HTMLFormElement).reset(); // Clear form on success
+        (e.target as HTMLFormElement).reset();
+      } else if (response.status === 429) {
+        setStatus("ratelimit");
       } else {
         setStatus("error");
       }
@@ -35,16 +38,14 @@ export default function ContactPage() {
       setStatus("error");
     }
   };
+
   return (
     <section className="min-h-screen pt-6 pb-20 overflow-hidden flex flex-col">
       <Container>
-        {/* Main Content Grid - Centered on Y-Axis */}
         <div className="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center px-4">
 
-          {/* Narrative & Heading - Combined and Vertically Centered */}
           <div className="flex flex-col justify-center space-y-10">
 
-            {/* Heading Integrated Here */}
             <div className="font-mono">
               <span className="text-emerald-500 text-lg">{">"} touch contact.json</span>
               <h1 className="text-5xl md:text-7xl font-bold text-white mt-2 tracking-tighter">
@@ -72,7 +73,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Social Connection Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <a href="https://github.com/md-ehtesham57" className="p-6 rounded-2xl border border-emerald-500/10 bg-zinc-900/40 backdrop-blur-sm hover:border-emerald-500/30 transition-all group">
                 <span className="block text-emerald-500 font-mono text-[10px] mb-2 uppercase tracking-widest group-hover:text-emerald-400">
@@ -105,6 +105,7 @@ export default function ContactPage() {
                     name="name"
                     required
                     type="text"
+                    onChange={() => status !== "idle" && setStatus("idle")}
                     className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:border-emerald-500/50 text-white outline-none transition-all"
                     placeholder="Enter name..."
                   />
@@ -115,6 +116,7 @@ export default function ContactPage() {
                     name="email"
                     required
                     type="email"
+                    onChange={() => status !== "idle" && setStatus("idle")}
                     className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:border-emerald-500/50 text-white outline-none transition-all"
                     placeholder="Enter email..."
                   />
@@ -125,10 +127,20 @@ export default function ContactPage() {
                     name="message"
                     required
                     rows={4}
+                    onChange={() => status !== "idle" && setStatus("idle")}
                     className="w-full bg-zinc-950/50 border border-emerald-500/10 rounded-xl px-4 py-3 focus:border-emerald-500/50 text-white outline-none transition-all resize-none"
                     placeholder="Enter message..."
                   />
                 </div>
+
+                {/* Honeypot - hidden from real users, catches bots */}
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                />
 
                 <div className="mt-8">
                   <button
@@ -143,6 +155,11 @@ export default function ContactPage() {
                 {status === "error" && (
                   <p className="text-red-500 text-[10px] text-center mt-2 uppercase tracking-widest animate-pulse">
                     ! Error: delivery_failed
+                  </p>
+                )}
+                {status === "ratelimit" && (
+                  <p className="text-yellow-500 text-[10px] text-center mt-2 uppercase tracking-widest animate-pulse">
+                    ! too_many_requests: try again later
                   </p>
                 )}
                 {status === "success" && (

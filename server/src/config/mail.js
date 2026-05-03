@@ -1,14 +1,11 @@
-const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, 'server/.env')});
-const nodemailer = require('nodemailer');
-
+import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // Your 16-character App Password
+    pass: process.env.EMAIL_PASS,
   },
 });
 
-module.exports = transporter;
+export default transporter;
