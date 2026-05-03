@@ -2,10 +2,10 @@ import Container from "@/components/ui/Container";
 
 export default function AboutPage() {
   return (
-    <section className="min-h-screen pt-6 overflow-hidden flex flex-col">
+    <section className="pt-6 pb-6 overflow-hidden">
       <Container>
         {/* Main Content Grid - Centered on Y-Axis */}
-        <div className="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center px-4">
+        <div className="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
           
           {/* Narrative Content - Vertically Centered */}
           <div className="flex flex-col justify-center space-y-10">

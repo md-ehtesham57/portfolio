@@ -14,7 +14,7 @@ export default function Hero() {
   const status = useTypewriter("Available for opportunities");
 
   return (
-    <section className="min-h-[85vh] flex items-center relative overflow-hidden">
+    <section className="pt-6 pb-6 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <Container>

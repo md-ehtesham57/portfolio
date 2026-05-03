@@ -2,7 +2,7 @@ import Container from "@/components/ui/Container";
 
 export default function Footer() {
     return (
-        <footer className="py-16 relative">
+        <footer className="py-6 relative">
 
             <Container>
                 <div className="relative rounded-2xl border border-emerald-500/20 bg-black/40 backdrop-blur-md px-6 py-10 md:px-10">

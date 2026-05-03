@@ -22,11 +22,18 @@ const projects = [
     github: "#",
     live: "#",
   },
+    {
+    title: "Portfolio Website",
+    description: "Modern animated developer portfolio built with Next.js and Framer Motion.",
+    tech: ["Next.js", "Framer Motion", "Tailwind"],
+    github: "#",
+    live: "#",
+  },
 ];
 
 export default function ProjectsSection() {
   return (
-    <section className="min-h-screen pt-4 pb-20 overflow-hidden">
+    <section className="pt-6 pb-6 overflow-hidden">
       <Container>
         
         {/* Terminal Style Heading */}
