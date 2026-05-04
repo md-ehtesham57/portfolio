@@ -14,7 +14,7 @@ const limiter = rateLimit({
 });
 
 app.use(cors({
-  origin: ["http://localhost:3000", "https://yourdomain.com"],
+  origin: ["http://localhost:3000", "https://md-ehtesham.vercel.app"],
   methods: ["POST"],
   allowedHeaders: ["Content-Type"],
 }));
