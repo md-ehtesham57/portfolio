@@ -67,6 +67,12 @@ export default function ContactPage() {
                   </a>
                 </div>
                 <div className="flex items-center gap-4 text-zinc-300">
+                  <span className="text-emerald-500 text-xs uppercase tracking-widest min-w-[100px]">[ phone ]</span>
+                  <a href="mailto:mdehtesham313@gmail.com" className="hover:text-emerald-400 transition-colors">
+                    +91-8340711589
+                  </a>
+                </div>
+                <div className="flex items-center gap-4 text-zinc-300">
                   <span className="text-emerald-500 text-xs uppercase tracking-widest min-w-[100px]">[ location ]</span>
                   <span>Bhopal, Madhya Pradesh, India</span>
                 </div>
