@@ -117,13 +117,33 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* ─── Hide native scrollbar globally ──────────────────────── */
+html,
+body {
+  overflow: hidden;
+  /* let OverlayScrollbars handle all scrolling */
+  height: 100%;
+}
+
+/* Hide native scrollbar in webkit browsers just in case */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide in Firefox */
+* {
+  scrollbar-width: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
