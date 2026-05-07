@@ -17,7 +17,8 @@ export default function ContactPage() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/contact/send", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/contact/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +69,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center gap-4 text-zinc-300">
                   <span className="text-emerald-500 text-xs uppercase tracking-widest min-w-[100px]">[ phone ]</span>
-                  <a href="mailto:mdehtesham313@gmail.com" className="hover:text-emerald-400 transition-colors">
+                  <a href="tel:+918340711589" className="hover:text-emerald-400 transition-colors">
                     +91-8340711589
                   </a>
                 </div>
@@ -139,13 +140,13 @@ export default function ContactPage() {
                   />
                 </div>
 
-                {/* Honeypot - hidden from real users, catches bots */}
+                {/* Honeypot - invisible to real users, catches bots */}
                 <input
                   type="text"
                   name="company"
                   tabIndex={-1}
                   autoComplete="off"
-                  className="hidden"
+                  className="absolute -left-[9999px] opacity-0 pointer-events-none"
                 />
 
                 <div className="mt-8">

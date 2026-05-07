@@ -53,7 +53,6 @@ export const handleContactForm = async (req, res) => {
     if (err.name === "ZodError") {
       return res.status(400).json({
         error: "validation_failed",
-        details: err.errors,
       });
     }
 

@@ -43,7 +43,7 @@ export default function Footer() {
                                 [ GitHub ]
                             </a>
                             <a
-                                href="https://linkedin.com"
+                                href="https://www.linkedin.com/in/md-ehtesham-153344259/"
                                 target="_blank"
                                 className="hover:text-emerald-400 transition"
                             >

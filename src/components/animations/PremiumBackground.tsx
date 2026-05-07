@@ -53,7 +53,7 @@ export default function PremiumBackground() {
         className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
         style={{
           backgroundImage:
-            "url('https://www.transparenttextures.com/patterns/noise.png')",
+            "url('/noise.png')",
         }}
       />
     </div>

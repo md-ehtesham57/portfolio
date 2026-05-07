@@ -22,13 +22,6 @@ const projects = [
     github: "#",
     live: "#",
   },
-    {
-    title: "Portfolio Website",
-    description: "Modern animated developer portfolio built with Next.js and Framer Motion.",
-    tech: ["Next.js", "Framer Motion", "Tailwind"],
-    github: "#",
-    live: "#",
-  },
 ];
 
 export default function ProjectsSection() {

@@ -18,19 +18,14 @@ export default function RootLayout({
           <PremiumBackground />
         </div>
 
+        {/* Navbar */}
+        <Navbar />
+
         <ScrollArea className="h-screen w-full">
           <main className="relative z-10 pt-20 md:pt-24">
             {children}
           </main>
         </ScrollArea>
-
-        {/* Navbar */}
-        <Navbar />
-
-        {/* Page Content */}
-        <main className="relative z-10 pt-20 md:pt-24">
-          {children}
-        </main>
 
       </body>
     </html>

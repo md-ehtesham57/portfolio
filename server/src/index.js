@@ -13,8 +13,12 @@ const limiter = rateLimit({
   message: { error: "too_many_requests"},
 });
 
+const allowedOrigins = process.env.NODE_ENV === "development"
+  ? ["http://localhost:3000", "https://md-ehtesham.vercel.app"]
+  : ["https://md-ehtesham.vercel.app"];
+
 app.use(cors({
-  origin: ["http://localhost:3000", "https://md-ehtesham.vercel.app"],
+  origin: allowedOrigins,
   methods: ["POST"],
   allowedHeaders: ["Content-Type"],
 }));
@@ -25,7 +29,5 @@ app.use("/api/contact", contactRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log("Check User:", process.env.EMAIL_USER);
-  console.log("Check Pass Length:", process.env.EMAIL_PASS?.length);
   console.log(`[SYSTEM]: Server running on port ${PORT}`);
 });
