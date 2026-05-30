@@ -17,8 +17,11 @@ export const handleContactForm = async (req, res) => {
   try {
     const parsed = contactSchema.parse(req.body);
 
+    // Honeypot: if company field is filled, it's likely a bot
+    // Always return success to avoid tipping off bots
     if (parsed.company) {
-      return res.status(400).json({ error: "bot_detected" });
+      // Silently accept - don't reveal bot detection
+      return res.status(200).json({ success: true });
     }
 
     const { name, email, message } = parsed;

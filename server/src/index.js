@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import contactRoutes from "./routes/contactRoutes.js";
@@ -21,6 +22,16 @@ app.use(cors({
   origin: allowedOrigins,
   methods: ["POST"],
   allowedHeaders: ["Content-Type"],
+}));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"], // Tailwind needs this
+      imgSrc: ["'self'", "data:", "https:"],
+      scriptSrc: ["'self'"],
+    }
+  }
 }));
 app.use(express.json());
 app.use("/api/contact", limiter);
