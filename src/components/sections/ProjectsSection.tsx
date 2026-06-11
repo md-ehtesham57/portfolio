@@ -3,45 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
-
-const projects = [
-  {
-    num: "01",
-    title: "Hexcode",
-    subtitle: "Online Coding Platform",
-    description:
-      "Execute, test, and submit code solutions in real time. Built a multi-language judge engine integrated with Judge0, real-time leaderboards, and a submission tracking system.",
-    tech: ["React", "Node.js", "PostgreSQL", "Judge0", "Vite", "Tailwind"],
-    github: "https://github.com/md-ehtesham57/hexcode",
-    live: "#",
-    accent: "#7c3aed",
-    tag: "Full-Stack",
-  },
-  {
-    num: "02",
-    title: "Rovio",
-    subtitle: "Car & Bike Rental Platform",
-    description:
-      "Responsive vehicle booking UI with advanced filtering, clean UX flows, and a booking management system. Focused on accessibility and mobile-first design.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    github: "https://github.com/md-ehtesham57/rovio-car-bike-rental",
-    live: "#",
-    accent: "#2563eb",
-    tag: "Frontend",
-  },
-  {
-    num: "03",
-    title: "Portfolio v2",
-    subtitle: "Developer Portfolio",
-    description:
-      "Modern animated developer portfolio with smooth transitions, architecture diagrams, and dark-mode precision design. Built with Next.js and Framer Motion.",
-    tech: ["Next.js", "Framer Motion", "Tailwind", "TypeScript"],
-    github: "#",
-    live: "#",
-    accent: "#0891b2",
-    tag: "Design",
-  },
-];
+import { projects } from "@/data/projects";
 
 export default function ProjectsSection() {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -62,11 +24,12 @@ export default function ProjectsSection() {
         {/* Project list */}
         <div className="space-y-6">
           {projects.map((p, i) => (
-            <div
+            <Link
               key={i}
+              href={`/projects/${p.slug}`}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className="group relative rounded-2xl border border-white/5 bg-[#111627]/60 backdrop-blur-sm p-8 transition-all duration-300 cursor-default overflow-hidden"
+              className="group relative block rounded-2xl border border-white/5 bg-[#111627]/60 backdrop-blur-sm p-8 transition-all duration-300 overflow-hidden"
               style={{
                 borderColor: hovered === i ? `${p.accent}30` : undefined,
                 boxShadow: hovered === i ? `0 0 40px ${p.accent}10` : undefined,
@@ -121,7 +84,7 @@ export default function ProjectsSection() {
                   </a>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
