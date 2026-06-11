@@ -24,12 +24,11 @@ export default function ProjectsSection() {
         {/* Project list */}
         <div className="space-y-6">
           {projects.map((p, i) => (
-            <Link
+            <div
               key={i}
-              href={`/projects/${p.slug}`}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className="group relative block rounded-2xl border border-white/5 bg-[#111627]/60 backdrop-blur-sm p-8 transition-all duration-300 overflow-hidden"
+              className="group relative rounded-2xl border border-white/5 bg-[#111627]/60 backdrop-blur-sm p-8 transition-all duration-300 overflow-hidden"
               style={{
                 borderColor: hovered === i ? `${p.accent}30` : undefined,
                 boxShadow: hovered === i ? `0 0 40px ${p.accent}10` : undefined,
@@ -68,6 +67,15 @@ export default function ProjectsSection() {
                 </div>
 
                 <div className="flex md:flex-col gap-3 shrink-0">
+                  <Link
+                    href={`/projects/${p.slug}`}
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-violet-200 border border-violet-500/60 bg-violet-500/10 rounded-lg transition-all duration-200 hover:bg-violet-500/20 hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:border-violet-400/80"
+                  >
+                    <span className="relative flex items-center gap-1.5">
+                      Details
+                      <span className="w-1 h-1 rounded-full bg-violet-400 animate-pulse shadow-[0_0_6px_#a78bfa]" />
+                    </span>
+                  </Link>
                   <a
                     href={p.github}
                     target="_blank"
@@ -84,7 +92,7 @@ export default function ProjectsSection() {
                   </a>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 
