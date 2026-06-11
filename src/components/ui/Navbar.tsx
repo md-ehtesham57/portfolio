@@ -1,100 +1,89 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import Container from "./Container";
-import { motion, AnimatePresence } from "framer-motion";
+
+const links = [
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
   return (
-    <nav className="fixed top-0 w-full z-50 pt-4">
-      <Container>
-        <div className="flex items-center justify-between h-14 px-4 rounded-full border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)] bg-black/60 backdrop-blur-md transition-all hover:border-emerald-500/50">
-
-          {/* Logo */}
-          <Link href="/" className="text-md font-bold tracking-tighter hover:text-emerald-400 transition-all">
-            Md Ehtesham<span className="text-emerald-500 animate-pulse">_</span>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
+      <div className="max-w-6xl mx-auto px-6">
+        <div className={`flex items-center justify-between px-6 py-3 rounded-2xl border transition-all duration-500 ${
+          scrolled
+            ? "border-violet-500/20 bg-[#080a12]/90 backdrop-blur-xl shadow-[0_0_30px_rgba(124,58,237,0.08)]"
+            : "border-transparent bg-transparent"
+        }`}>
+          <Link href="/" className="group flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center text-xs font-bold text-white">
+              E
+            </div>
+            <span className="text-sm font-semibold text-white tracking-tight">Md Ehtesham</span>
           </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400">
-            <Link href="/projects" className="hover:text-emerald-400 transition-colors">
-              <span className="text-emerald-500/50 mr-1">//</span> Projects
-            </Link>
-            <Link href="/about" className="hover:text-emerald-400 transition-colors">
-              <span className="text-emerald-500/50 mr-1">//</span> About
-            </Link>
-            <Link href="/contact" className="hover:text-emerald-400 transition-colors">
-              <span className="text-emerald-500/50 mr-1">//</span> Contact
-            </Link>
+          {/* Desktop */}
+          <div className="hidden md:flex items-center gap-1">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="px-4 py-2 text-sm text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <a
+              href="https://shorturl.at/uKWXm"
+              target="_blank"
+              className="ml-3 px-4 py-2 text-sm text-violet-300 border border-violet-500/40 rounded-lg hover:bg-violet-500/10 hover:border-violet-400/60 transition-all duration-200"
+            >
+              Resume ↗
+            </a>
           </div>
 
-          {/* Mobile Buttons */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden text-white cursor-pointer"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
+          {/* Mobile toggle */}
+          <button onClick={() => setOpen(!open)} className="md:hidden text-slate-400 hover:text-white transition-colors">
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </Container>
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 top-[72px] bg-black/40 backdrop-blur-sm z-40"
-        />
-      )}
-      <AnimatePresence>
+
+        {/* Mobile menu */}
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.98 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="md:hidden mt-4 relative z-50"
-          >
-            <Container>
-              <div className="flex flex-col gap-4 p-4 rounded-2xl border border-emerald-500/20 bg-black/80 backdrop-blur-md">
-
-                <motion.div whileHover={{ scale: 1.02 }}>
-                  <Link
-                    href="/projects"
-                    onClick={() => setOpen(false)}
-                    className="block w-full text-center px-6 py-3 rounded-full border border-emerald-500/20 text-zinc-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all"
-                  >
-                    Projects
-                  </Link>
-                </motion.div>
-
-                <motion.div whileHover={{ scale: 1.02 }}>
-                  <Link
-                    href="/about"
-                    onClick={() => setOpen(false)}
-                    className="block w-full text-center px-6 py-3 rounded-full border border-emerald-500/20 text-zinc-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all"
-                  >
-                    About
-                  </Link>
-                </motion.div>
-
-                <motion.div whileHover={{ scale: 1.02 }}>
-                  <Link
-                    href="/contact"
-                    onClick={() => setOpen(false)}
-                    className="block w-full text-center px-6 py-3 rounded-full border border-emerald-500/20 text-zinc-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all"
-                  >
-                    Contact
-                  </Link>
-                </motion.div>
-
-              </div>
-            </Container>
-          </motion.div>
+          <div className="md:hidden mt-2 p-4 rounded-2xl border border-violet-500/20 bg-[#080a12]/95 backdrop-blur-xl flex flex-col gap-1">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-all"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <a
+              href="https://shorturl.at/uKWXm"
+              target="_blank"
+              className="mt-2 px-4 py-3 text-sm text-violet-300 border border-violet-500/30 rounded-xl text-center"
+            >
+              Download Resume ↗
+            </a>
+          </div>
         )}
-      </AnimatePresence>
-
+      </div>
     </nav>
   );
 }
