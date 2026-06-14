@@ -23,11 +23,7 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className={`flex items-center justify-between px-6 py-3 rounded-2xl border transition-all duration-500 ${
-          scrolled
-            ? "border-violet-500/20 bg-[#080a12]/90 backdrop-blur-xl shadow-[0_0_30px_rgba(124,58,237,0.08)]"
-            : "border-transparent bg-transparent"
-        }`}>
+        <div className={`flex items-center justify-between px-6 py-3 rounded-2xl border transition-all duration-500 ${scrolled ? "border-violet-500/20 bg-[#080a12]/90 backdrop-blur-xl shadow-[0_0_30px_rgba(124,58,237,0.08)]" : "border-transparent bg-transparent"}`}>
           <Link href="/" className="group flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center text-xs font-bold text-white">
               E

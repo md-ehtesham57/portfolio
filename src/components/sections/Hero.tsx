@@ -4,18 +4,19 @@ import { motion } from "framer-motion";
 import Container from "../ui/Container";
 import { staggerContainer, fadeInUp } from "@/lib/motion";
 import ProjectPreview from "./ProjectPreview";
+import { cn } from "@/lib/utils";
 
 const STATS = [
-  { label: "Projects",  value: "10+" },
-  { label: "Clients",   value: "5+"  },
-  { label: "Tech",      value: "15+" },
-  { label: "Coffee",    value: "∞"   },
+  { label: "Projects", value: "10+" },
+  { label: "Clients", value: "5+" },
+  { label: "Tech", value: "15+" },
+  { label: "Coffee", value: "∞" },
 ];
 
 const MERN = [
   { name: "MongoDB", color: "#47A248" },
   { name: "Express", color: "#ffffff" },
-  { name: "React",   color: "#61DAFB" },
+  { name: "React", color: "#61DAFB" },
   { name: "Node.js", color: "#339933" },
 ];
 
@@ -26,12 +27,10 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center py-12 pt-28 overflow-hidden">
 
       {/* ── Ambient glow ─────────────────────────────────────────────── */}
-      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2
-        w-[50vw] max-w-[500px] aspect-square
-        bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4
-        w-[30vw] max-w-[300px] aspect-square
-        bg-violet-500/3 rounded-full blur-3xl pointer-events-none" />
+      <div className={cn(
+        "absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2",
+        "w-[50vw] max-w-[500px] aspect-square",
+        "bg-violet-500/5 rounded-full blur-3xl pointer-events-none")} />
 
       <Container>
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -82,18 +81,12 @@ export default function Hero() {
               className="flex flex-col sm:flex-row gap-3 mt-8"
             >
               <a href="/projects"
-                className="text-sm text-violet-300 border border-violet-500/40
-                  px-5 py-3 rounded-xl text-center bg-violet-500/5
-                  hover:bg-violet-500/15 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)]
-                  transition-all duration-200 font-medium"
+                className="text-sm text-violet-300 border border-violet-500/40 px-5 py-3 rounded-xl text-center bg-violet-500/5 hover:bg-violet-500/15 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)] transition-all duration-200 font-medium"
               >
                 View Projects →
               </a>
               <a href="/contact"
-                className="text-sm text-slate-400 border border-white/10
-                  px-5 py-3 rounded-xl text-center
-                  hover:border-white/30 hover:text-white/80
-                  transition-all duration-200 font-medium"
+                className="text-sm text-slate-400 border border-white/10 px-5 py-3 rounded-xl text-center hover:border-white/30 hover:text-white/80 transition-all duration-200 font-medium"
               >
                 Get in Touch
               </a>
@@ -124,14 +117,9 @@ export default function Hero() {
             className="flex flex-col items-center gap-4"
           >
             {/* Profile card */}
-            <div className="rounded-2xl border border-white/10 overflow-hidden
-              bg-[#111627]/80 backdrop-blur-xl max-w-xs w-full
-              shadow-[0_0_40px_rgba(124,58,237,0.07),inset_0_0_30px_rgba(0,0,0,0.5)]"
-            >
+            <div className="rounded-2xl border border-white/10 overflow-hidden bg-[#111627]/80 backdrop-blur-xl max-w-xs w-full shadow-[0_0_40px_rgba(124,58,237,0.07),inset_0_0_30px_rgba(0,0,0,0.5)]">
               {/* Title bar */}
-              <div className="flex items-center gap-2 px-4 py-2.5
-                border-b border-white/10 bg-white/[0.03]"
-              >
+              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-white/[0.03]">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
                 <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
                 <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
@@ -143,9 +131,7 @@ export default function Hero() {
               <ProjectPreview />
 
               {/* Status bar */}
-              <div className="flex items-center justify-between px-4 py-1.5
-                border-t border-white/10 bg-white/[0.02]"
-              >
+              <div className="flex items-center justify-between px-4 py-1.5 border-t border-white/10 bg-white/[0.02]">
                 <span className="font-mono text-[9px] text-slate-500 tracking-widest uppercase">
                   MERN · SaaS · Full Stack
                 </span>
@@ -182,11 +168,7 @@ export default function Hero() {
             >
               {TECH.map(t => (
                 <span key={t}
-                  className="font-mono text-[10px] text-slate-500/80
-                    border border-white/10 bg-white/[0.03]
-                    px-2 py-0.5 rounded-sm tracking-wide
-                    hover:border-white/30 hover:text-slate-300
-                    transition-all duration-150 cursor-default"
+                  className="font-mono text-[10px] text-slate-500/80 border border-white/10 bg-white/[0.03] px-2 py-0.5 rounded-sm tracking-wide hover:border-white/30 hover:text-slate-300 transition-all duration-150 cursor-default"
                 >
                   {t}
                 </span>

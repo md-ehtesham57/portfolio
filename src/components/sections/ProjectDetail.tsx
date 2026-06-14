@@ -10,17 +10,13 @@ import { staggerContainer, fadeInUp } from "@/lib/motion";
 export default function ProjectDetail({ project }: { project: Project }) {
   return (
     <>
-      {/* ── Header ──────────────────────────────────────────────── */}
-      <section className="relative py-12 overflow-hidden">
+      {/* Header */}
+      <section className="relative pt-28 pb-16 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[50vw] max-w-[500px] aspect-square bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
 
         <Container>
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="show"
-            className="relative z-10"
-          >
+          <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
+
             <motion.div variants={fadeInUp}>
               <Link
                 href="/projects"
@@ -75,36 +71,26 @@ export default function ProjectDetail({ project }: { project: Project }) {
               )}
             </motion.div>
 
-            {/* Tech badges */}
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-2 mt-6">
               {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 border border-white/5 font-mono"
-                >
+                <span key={t} className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 border border-white/5 font-mono">
                   {t}
                 </span>
               ))}
             </motion.div>
+
           </motion.div>
         </Container>
       </section>
 
-      {/* ── YouTube Video Tour ──────────────────────────────────── */}
+      {/* YouTube */}
       {project.youtubeVideoId && (
-        <section className="py-12">
+        <section className="py-16">
           <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex items-center gap-2 mb-6">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+              <div className="flex items-center gap-2 mb-4">
                 <span className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_#f87171]" />
-                <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">
-                  Project Tour
-                </span>
+                <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">Project Tour</span>
               </div>
               <h2 className="text-2xl font-bold text-white mb-6">See it in action</h2>
               <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black/60 shadow-[0_0_40px_rgba(124,58,237,0.06)]">
@@ -121,27 +107,17 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </section>
       )}
 
-      {/* ── Architecture ────────────────────────────────────────── */}
-      <section className="py-12">
+      {/* Architecture */}
+      <section className="py-16">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex items-center gap-2 mb-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-2 h-2 rounded-full bg-violet-400 shadow-[0_0_8px_#a78bfa]" />
-              <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">
-                Architecture
-              </span>
+              <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">Architecture</span>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-4">System Architecture & Flow</h2>
-            <p className="text-slate-400 leading-relaxed mb-8 max-w-3xl">
-              {project.architecture.summary}
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h2 className="text-2xl font-bold text-white mb-4">System Architecture &amp; Flow</h2>
+            <p className="text-slate-400 leading-relaxed mb-8 max-w-3xl">{project.architecture.summary}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {project.architecture.sections.map((section, i) => (
                 <motion.div
                   key={section.label}
@@ -149,7 +125,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.4 }}
-                  className="rounded-2xl border border-white/10 bg-[#111627]/80 backdrop-blur-xl p-6 hover:border-violet-500/20 transition-colors"
+                  className="rounded-2xl border border-white/[0.08] bg-[#111627]/80 backdrop-blur-xl p-6 hover:border-violet-500/20 transition-colors"
                 >
                   <h3 className="text-sm font-semibold text-white mb-2">{section.label}</h3>
                   <p className="text-sm text-slate-400 leading-relaxed">{section.content}</p>
@@ -160,20 +136,13 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </Container>
       </section>
 
-      {/* ── Features ────────────────────────────────────────────── */}
-      <section className="py-12">
+      {/* Features */}
+      <section className="py-16">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex items-center gap-2 mb-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
-              <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">
-                Features
-              </span>
+              <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">Features</span>
             </div>
             <h2 className="text-2xl font-bold text-white mb-6">Key Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -184,7 +153,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05, duration: 0.3 }}
-                  className="flex items-start gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.02]"
+                  className="flex items-start gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-emerald-500/20 transition-colors"
                 >
                   <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                   <span className="text-sm text-slate-300">{feature}</span>
@@ -195,22 +164,15 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </Container>
       </section>
 
-      {/* ── Challenges ──────────────────────────────────────────── */}
-      <section className="py-12">
+      {/* Challenges */}
+      <section className="py-16">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex items-center gap-2 mb-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" />
-              <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">
-                Challenges
-              </span>
+              <span className="text-xs text-violet-400 font-mono uppercase tracking-widest">Challenges</span>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-6">Challenges & Solutions</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">Challenges &amp; Solutions</h2>
             <div className="space-y-4">
               {project.challenges.map((challenge, i) => (
                 <motion.div
@@ -219,7 +181,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.3 }}
-                  className="flex items-start gap-3 p-5 rounded-xl border border-white/5 bg-[#111627]/60 backdrop-blur-sm"
+                  className="flex items-start gap-3 p-5 rounded-xl border border-white/5 bg-[#111627]/60 backdrop-blur-sm hover:border-amber-500/20 transition-colors"
                 >
                   <AlertTriangle size={18} className="text-amber-400 shrink-0 mt-0.5" />
                   <span className="text-sm text-slate-300 leading-relaxed">{challenge}</span>
@@ -230,15 +192,10 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </Container>
       </section>
 
-      {/* ── Links ───────────────────────────────────────────────── */}
-      <section className="py-12">
+      {/* Resources */}
+      <section className="py-16">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <div className="rounded-2xl border border-white/10 bg-[#111627]/80 backdrop-blur-xl p-8">
               <h2 className="text-lg font-bold text-white mb-4">Resources</h2>
               <div className="flex flex-wrap gap-4">
@@ -259,14 +216,11 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </Container>
       </section>
 
-      {/* ── Bottom nav ──────────────────────────────────────────── */}
-      <section className="pb-12">
+      {/* Bottom nav */}
+      <section className="pb-16">
         <Container>
           <div className="text-center">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-violet-300 transition-colors"
-            >
+            <Link href="/projects" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-violet-300 transition-colors">
               <ArrowLeft size={16} />
               Back to all projects
             </Link>
