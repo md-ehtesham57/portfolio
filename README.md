@@ -21,6 +21,9 @@
 
 | Layer | Package | Version |
 |---|---|---|
+| Test Runner | `vitest` | 4.1.9 |
+| Testing Library | `@testing-library/react` / `@testing-library/jest-dom` | latest |
+| HTTP Testing | `supertest` | 7.2.2 |
 | Framework | `next` | 16.2.4 |
 | UI Library | `react` | 19.2.4 |
 | DOM Renderer | `react-dom` | 19.2.4 |
@@ -78,6 +81,13 @@ When an AI edits this project, it MUST follow these rules:
 1. Create the section component in `src/components/sections/`.
 2. Import it into `src/app/page.tsx` and insert between existing sections with a `SectionDivider` between them.
 3. If the section needs its own route, create `src/app/{name}/page.tsx` and re-export the section component.
+
+### 3.6 Testing Rules
+- Tests are in `src/__tests__/`, mirroring the source structure (e.g. `src/__tests__/components/sections/`).
+- Backend tests are in `server/src/__tests__/`.
+- Use Vitest globals (`describe`, `it`, `expect`, `vi`). Do NOT import from Vitest.
+- Mock external services (nodemailer, fetch) — never hit real APIs.
+- Test data integrity, not implementation details.
 
 ### 3.5 Adding a New Animation Background
 1. Create the component in `src/components/animations/`.
@@ -188,7 +198,24 @@ interface Project {
 | `motion.ts` | `staggerContainer`, `fadeInUp` | Framer Motion variant objects |
 | `utils.ts` | `function cn(...inputs: ClassValue[])` | `clsx` + `tailwind-merge` combinator |
 
-### 5.8 `server/` — Express Backend
+### 5.8 `src/__tests__/` — Frontend Tests
+
+| File | Tests | What it covers |
+|---|---|---|
+| `components/ui/Container.test.tsx` | 2 | Render children, CSS classes |
+| `components/ui/Navbar.test.tsx` | 5 | nav links, Resume link, mobile toggle, scroll behavior |
+| `components/sections/ContactSection.test.tsx` | 6 | form fields, submit flow, success/error/rate-limit states, social links |
+| `data/projects.test.ts` | 8 | data integrity — unique slugs, required fields, valid URLs, helper functions |
+| `hooks/useTypewriter.test.ts` | 4 | character-by-character typing, timing, cleanup on unmount |
+
+### 5.9 `server/src/__tests__/` — Backend Tests
+
+| File | Tests | What it covers |
+|---|---|---|
+| `contact.test.js` | 6 | valid submission, honeypot bypass, validation errors (name/email/message limits) |
+| `rateLimit.test.js` | 1 | rate limiter blocks after max requests |
+
+### 5.10 `server/` — Express Backend
 
 | File | Exports | Purpose |
 |---|---|---|
@@ -356,6 +383,9 @@ src/components/ui/card.tsx
 | `npm run build` | Production build with SSG |
 | `npm run start` | Starts production server |
 | `npm run lint` | ESLint |
+| `npm test` | Vitest (frontend) — 25 tests across 5 files |
+| `npm run test:watch` | Vitest watch mode |
+| `npm run test:all` | Frontend + backend tests (convenience) |
 
 ### Backend (`server/package.json`)
 
@@ -363,6 +393,7 @@ src/components/ui/card.tsx
 |---|---|
 | `npm run dev` | `nodemon src/index.js` — auto-reload on save |
 | `npm start` | `node src/index.js` — production |
+| `npm test` | Vitest (backend) — 7 tests across 2 files |
 
 ---
 
@@ -420,6 +451,10 @@ fadeInUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition
 8. **ScrollArea** — Replaces the native scrollbar. The component is in `ui/` but is NOT used in the main layout — it's available for future use. The page uses native `overflow-x-hidden`.
 9. **Zod v4** — `z.string().trim()` is a Zod 4 method. Trim returns a new ZodString (it's a modifier, not a transform step).
 10. **`new Date().getFullYear()`** — Used in Footer.tsx. The year will auto-update on each build.
+11. **Vitest globals** — `describe`, `it`, `expect`, `vi` are global in test files. Do NOT import them. The `vitest.config.ts` has `globals: true`.
+12. **Server app export** — `server/src/index.js` exports `app` (Express instance) and only starts listening when run directly. Tests import `app` via supertest without starting a server.
+13. **Rate limiter in tests** — The rate limiter is disabled when `NODE_ENV=test`. Rate limiting is tested in isolation via `server/src/__tests__/rateLimit.test.js`.
+14. **Test files excluded from tsconfig** — The `tsconfig.json` excludes `src/__tests__/` because Vitest provides its own type definitions for `describe`, `it`, etc. via `globals: true`.
 
 ---
 
@@ -442,6 +477,15 @@ fadeInUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition
 
 ### "Add an email template change"
 → Edit `server/src/controllers/contactController.js` — the `mailOptions.html` string.
+
+### "Run tests"
+→ `npm test` (frontend), `cd server && npm test` (backend), or `npm run test:all` (both).
+
+### "Add a new test"
+→ Create `src/__tests__/path/to/ComponentName.test.tsx` mirroring the source structure. Vitest auto-discovers `*.test.{ts,tsx}` files.
+
+### "Mock an API call in tests"
+→ Use `vi.stubGlobal("fetch", mockFn)` in frontend tests. Use `vi.mock("module-name")` in backend tests.
 
 ---
 

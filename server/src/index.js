@@ -34,11 +34,18 @@ app.use(helmet({
   }
 }));
 app.use(express.json());
-app.use("/api/contact", limiter);
+if (process.env.NODE_ENV !== "test") {
+  app.use("/api/contact", limiter);
+}
 
 app.use("/api/contact", contactRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`[SYSTEM]: Server running on port ${PORT}`);
-});
+export default app;
+
+// Only start the server when run directly (not imported by tests)
+if (process.argv[1] && process.argv[1].includes("index.js")) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`[SYSTEM]: Server running on port ${PORT}`);
+  });
+}
