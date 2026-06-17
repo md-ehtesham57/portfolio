@@ -43,7 +43,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href="https://shorturl.at/uKWXm"
+              href="https://drive.google.com/file/d/1j6vrxlQWweCceshXSJgoPy0qGUtFKeD3/view?usp=drive_link"
               target="_blank"
               className="ml-3 px-4 py-2 text-sm text-violet-300 border border-violet-500/40 rounded-lg hover:bg-violet-500/10 hover:border-violet-400/60 transition-all duration-200"
             >
