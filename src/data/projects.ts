@@ -10,6 +10,7 @@ export interface Project {
   live: string;
   accent: string;
   tag: string;
+  thumbnail?: string;
   youtubeVideoId?: string;
   architecture: {
     summary: string;
@@ -27,6 +28,7 @@ export const projects: Project[] = [
     num: "01",
     title: "Hexcode",
     subtitle: "Online Coding Platform",
+    thumbnail: "/thumbnails/hexcode.png",
     description:
       "Execute, test, and submit code solutions in real time. Built a multi-language judge engine integrated with Judge0, real-time leaderboards, and a submission tracking system.",
     longDescription:
@@ -70,6 +72,7 @@ export const projects: Project[] = [
     num: "02",
     title: "Rovio",
     subtitle: "Car & Bike Rental Platform",
+    thumbnail: "/thumbnails/rovio.png",
     description:
       "Responsive vehicle booking UI with advanced filtering, clean UX flows, and a booking management system. Focused on accessibility and mobile-first design.",
     longDescription:
@@ -112,6 +115,7 @@ export const projects: Project[] = [
     num: "03",
     title: "Portfolio v2",
     subtitle: "Developer Portfolio",
+    thumbnail: "/thumbnails/portfolio.png",
     description:
       "Modern animated developer portfolio with smooth transitions, architecture diagrams, and dark-mode precision design. Built with Next.js and Framer Motion.",
     longDescription:
