@@ -58,10 +58,47 @@ function ProjectCard({ p, i, isEven }: { p: Project; i: number; isEven: boolean 
         }}
       />
 
-      <div className={`relative z-10 grid grid-cols-1 lg:grid-cols-2 ${isEven ? "" : "lg:grid-flow-col-dense"}`}>
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2">
+
+        {/* THUMBNAIL SIDE */}
+        <div
+          className={`relative aspect-[16/10] lg:aspect-auto min-h-[240px] overflow-hidden
+            ${isEven
+              ? "lg:border-l border-white/[0.06] lg:col-start-2"
+              : "lg:border-r border-white/[0.06]"
+            }`}
+        >
+          {p.thumbnail ? (
+            <Image
+              src={p.thumbnail}
+              alt={`${p.title} screenshot`}
+              fill
+              className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          ) : (
+            <ThumbnailPlaceholder accent={p.accent} title={p.title} />
+          )}
+
+          {/* Gradient blend into card */}
+          <div
+            className={`absolute inset-0 pointer-events-none ${
+              isEven
+                ? "bg-gradient-to-r from-[#111627]/80 via-transparent to-transparent"
+                : "bg-gradient-to-l from-[#111627]/80 via-transparent to-transparent"
+            }`}
+          />
+
+          {p.live !== "#" && (
+            <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 text-[10px] text-slate-300 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              Live
+            </div>
+          )}
+        </div>
 
         {/* TEXT SIDE */}
-        <div className={`flex flex-col justify-center gap-5 p-8 lg:p-10 ${isEven ? "" : "lg:col-start-2"}`}>
+        <div className={`flex flex-col justify-center gap-5 p-8 lg:p-10 ${isEven ? "lg:col-start-1" : ""}`}>
           <div className="flex items-center gap-3">
             <span className="text-xs font-mono text-slate-600">{p.num}</span>
             <span
@@ -117,43 +154,6 @@ function ProjectCard({ p, i, isEven }: { p: Project; i: number; isEven: boolean 
               </a>
             )}
           </div>
-        </div>
-
-        {/* THUMBNAIL SIDE */}
-        <div
-          className={`relative aspect-[16/10] lg:aspect-auto min-h-[240px] overflow-hidden
-            ${isEven
-              ? "lg:border-l border-white/[0.06]"
-              : "lg:border-r border-white/[0.06] lg:col-start-1 lg:row-start-1"
-            }`}
-        >
-          {p.thumbnail ? (
-            <Image
-              src={p.thumbnail}
-              alt={`${p.title} screenshot`}
-              fill
-              className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          ) : (
-            <ThumbnailPlaceholder accent={p.accent} title={p.title} />
-          )}
-
-          {/* Gradient blend into card */}
-          <div
-            className={`absolute inset-0 pointer-events-none ${
-              isEven
-                ? "bg-gradient-to-r from-[#111627]/80 via-transparent to-transparent"
-                : "bg-gradient-to-l from-[#111627]/80 via-transparent to-transparent"
-            }`}
-          />
-
-          {p.live !== "#" && (
-            <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 text-[10px] text-slate-300 font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              Live
-            </div>
-          )}
         </div>
 
       </div>
