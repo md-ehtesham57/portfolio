@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="py-12 px-6 relative">
+    <footer className="py-16 px-6 relative">
       <div className="max-w-6xl mx-auto">
         <div className="relative rounded-2xl border border-white/10 bg-[#111627]/80 backdrop-blur-xl px-8 py-8 shadow-[0_0_30px_rgba(124,58,237,0.04)]">
 

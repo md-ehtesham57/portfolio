@@ -36,7 +36,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="py-12">
+    <section className="py-16">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 

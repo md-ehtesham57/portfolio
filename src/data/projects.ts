@@ -10,6 +10,7 @@ export interface Project {
   live: string;
   accent: string;
   tag: string;
+  type: "solo" | "client";
   thumbnail?: string;
   youtubeVideoId?: string;
   architecture: {
@@ -23,11 +24,75 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  // ── CLIENT / INTERNSHIP ──────────────────────────────────────
+  {
+    slug: "xubru-ai",
+    num: "01",
+    title: "Xubru.AI",
+    subtitle: "AI-Powered Business Intelligence Platform",
+    type: "client",
+    thumbnail: "/thumbnails/xubru.png",
+    description:
+      "Contributed to a production AI analytics platform — debugged critical OAuth login issues, coupon system bugs, and conducted a full security audit covering authentication flows and API hardening.",
+    longDescription:
+      "Xubru.AI is a business intelligence platform that enables teams to upload data and instantly generate dashboards, KPI templates, AI-powered summaries, and deep analytics insights. As an intern, I worked directly on the production codebase — identifying and resolving high-impact bugs in the authentication system, billing flows, and conducting a comprehensive security audit.",
+    tech: ["Next.js", "React", "Python", "FastAPI", "Docker", "Nginx", "PostgreSQL"],
+    github: "#",
+    live: "https://xubru.ai",
+    accent: "#0ea5e9",
+    tag: "Internship",
+    architecture: {
+      summary:
+        "Xubru.AI uses a decoupled architecture with a Next.js frontend served via Nginx reverse proxy, and a Python FastAPI backend handling data processing, AI summarisation, and REST API endpoints. Services are orchestrated with Docker Compose.",
+      sections: [
+        {
+          label: "Frontend",
+          content:
+            "Next.js + React application handling dashboards, KPI template selection, file uploads, and real-time chart rendering. Communicates with the FastAPI backend via REST.",
+        },
+        {
+          label: "Backend",
+          content:
+            "Python FastAPI service responsible for data ingestion, AI-powered analysis, user authentication (OAuth), billing/coupon logic, and serving analytics results to the frontend.",
+        },
+        {
+          label: "Infrastructure",
+          content:
+            "Docker Compose orchestrates the frontend, backend, and database containers. Nginx acts as a reverse proxy routing traffic and handling SSL termination in production.",
+        },
+        {
+          label: "Security",
+          content:
+            "Conducted a full security audit covering OAuth token handling, session management, API endpoint authorization, and input validation. Identified and patched several critical vulnerabilities.",
+        },
+      ],
+    },
+    features: [
+      "AI-generated summaries and business insights from raw data",
+      "KPI templates for SaaS, E-commerce, Finance, HR, and more",
+      "Smart Filters and Analytics dashboards",
+      "OAuth login with Google and GitHub",
+      "Coupon and billing system for Pro/Enterprise plans",
+      "Alerts and collaboration tools for teams",
+    ],
+    challenges: [
+      "Diagnosed and fixed a broken OAuth flow where tokens were not being invalidated correctly on logout, leaving sessions exposed",
+      "Resolved a coupon code creation bug in the billing system that allowed invalid coupons to be applied silently",
+      "Conducted a full security audit — identified insecure direct object references on several API endpoints and patched them",
+      "Hardened API routes against unauthenticated access by auditing middleware chains across the FastAPI service",
+    ],
+    links: [
+      { label: "Live Product", url: "https://xubru.ai" },
+    ],
+  },
+
+  // ── SOLO PROJECTS ────────────────────────────────────────────
   {
     slug: "hexcode",
-    num: "01",
+    num: "02",
     title: "Hexcode",
     subtitle: "Online Coding Platform",
+    type: "solo",
     thumbnail: "/thumbnails/hexcode.png",
     description:
       "Execute, test, and submit code solutions in real time. Built a multi-language judge engine integrated with Judge0, real-time leaderboards, and a submission tracking system.",
@@ -69,9 +134,10 @@ export const projects: Project[] = [
   },
   {
     slug: "rovio",
-    num: "02",
+    num: "03",
     title: "Rovio",
     subtitle: "Car & Bike Rental Platform",
+    type: "solo",
     thumbnail: "/thumbnails/rovio.png",
     description:
       "Responsive vehicle booking UI with advanced filtering, clean UX flows, and a booking management system. Focused on accessibility and mobile-first design.",
@@ -112,42 +178,42 @@ export const projects: Project[] = [
   },
   {
     slug: "portfolio",
-    num: "03",
+    num: "04",
     title: "Portfolio v2",
     subtitle: "Developer Portfolio",
+    type: "solo",
     thumbnail: "/thumbnails/portfolio.png",
     description:
       "Modern animated developer portfolio with smooth transitions, architecture diagrams, and dark-mode precision design. Built with Next.js and Framer Motion.",
     longDescription:
       "This portfolio website showcases modern web development capabilities with smooth page transitions, interactive UI elements, and a dark-mode design system. Built from the ground up with Next.js App Router and Framer Motion animations.",
-    tech: ["Next.js", "Framer Motion", "Tailwind CSS", "TypeScript", "shadcn/ui"],
+    tech: ["Next.js", "Framer Motion", "Tailwind CSS", "TypeScript"],
     github: "#",
     live: "#",
     accent: "#0891b2",
     tag: "Design",
-    youtubeVideoId: "dQw4w9WgXcQ",
     architecture: {
       summary:
-        "Built on Next.js 16 App Router with a component-based architecture. Uses Tailwind CSS for styling, Framer Motion for animations, and follows a modular section-based layout pattern.",
+        "Built on Next.js App Router with a component-based architecture. Uses Tailwind CSS for styling, Framer Motion for animations, and follows a modular section-based layout pattern.",
       sections: [
-        { label: "Framework", content: "Next.js 16 with App Router providing file-based routing, server components, and optimal performance through static generation and incremental static regeneration." },
+        { label: "Framework", content: "Next.js App Router providing file-based routing, server components, and optimal performance through static generation." },
         { label: "Styling", content: "Tailwind CSS 4 for utility-first styling with custom design tokens. Global CSS variables for theme colors and consistent spacing across components." },
         { label: "Animations", content: "Framer Motion for page transitions, scroll-triggered animations, and interactive UI elements. Reusable animation variants defined in a shared motion library." },
-        { label: "Components", content: "Modular component architecture with clear separation: sections (page-level blocks), UI (reusable primitives), animations (background effects), and shared (cross-cutting features)." },
+        { label: "Components", content: "Modular component architecture with clear separation: sections (page-level blocks), UI (reusable primitives), and shared (cross-cutting features)." },
       ],
     },
     features: [
       "Smooth page transitions with Framer Motion",
-      "Animated background effects (gradient, particles, mesh)",
+      "Animated system architecture diagram in hero",
       "Fixed navigation with scroll-aware styling",
-      "Custom scrollbar with particle effects",
       "Responsive design across all device sizes",
       "Contact form with Express backend integration",
+      "Project detail case study pages",
     ],
     challenges: [
       "Coordinating complex staggered animations without performance degradation",
       "Achieving consistent dark-mode aesthetics across all components and pages",
-      "Building a custom scrollbar that feels native while adding visual flair",
+      "Building a reusable design system from scratch without a component library",
     ],
     links: [
       { label: "GitHub Repository", url: "#" },
@@ -155,6 +221,9 @@ export const projects: Project[] = [
     ],
   },
 ];
+
+export const clientProjects = projects.filter((p) => p.type === "client");
+export const soloProjects = projects.filter((p) => p.type === "solo");
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

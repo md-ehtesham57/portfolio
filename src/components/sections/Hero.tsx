@@ -24,7 +24,7 @@ const TECH = ["TypeScript", "Next.js", "PostgreSQL", "Docker", "Tailwind CSS", "
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center py-12 pt-28 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
 
       {/* ── Ambient glow ─────────────────────────────────────────────── */}
       <div className={cn(
