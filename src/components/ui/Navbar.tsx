@@ -43,7 +43,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href="https://drive.google.com/file/d/1VhiLrgksoReN4KRsgk-4YCQY2tm9p01T/view?usp=sharing"
+              href="https://drive.google.com/file/d/1UD9L8CUSec80CgJDIthZriHQa3ih9dB6/view?usp=sharing"
               target="_blank"
               className="ml-3 px-4 py-2 text-sm text-violet-300 border border-violet-500/40 rounded-lg hover:bg-violet-500/10 hover:border-violet-400/60 transition-all duration-200"
             >
@@ -71,7 +71,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href="https://drive.google.com/file/d/1VhiLrgksoReN4KRsgk-4YCQY2tm9p01T/view?usp=sharing"
+              href="https://drive.google.com/file/d/1UD9L8CUSec80CgJDIthZriHQa3ih9dB6/view?usp=sharing"
               target="_blank"
               className="mt-2 px-4 py-3 text-sm text-violet-300 border border-violet-500/30 rounded-xl text-center"
             >

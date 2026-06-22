@@ -22,7 +22,7 @@ describe("Navbar", () => {
     render(<Navbar />);
     const resume = screen.getByText("Resume ↗");
     expect(resume).toBeInTheDocument();
-    expect(resume).toHaveAttribute("href", "https://drive.google.com/file/d/1VhiLrgksoReN4KRsgk-4YCQY2tm9p01T/view?usp=sharing");
+    expect(resume).toHaveAttribute("href", "https://drive.google.com/file/d/1UD9L8CUSec80CgJDIthZriHQa3ih9dB6/view?usp=sharing");
   });
 
   it("toggles mobile menu on hamburger click", () => {
