@@ -1,6 +1,15 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactSection from "@/components/sections/ContactSection";
+
+async function fillForm(user: ReturnType<typeof userEvent.setup>) {
+  await user.type(screen.getByPlaceholderText(/your name/i), "Test");
+  await user.type(screen.getByPlaceholderText("your@email.com"), "test@test.com");
+  await user.type(
+    screen.getByPlaceholderText(/tell me about your project/i),
+    "This is a test message."
+  );
+}
 
 describe("ContactSection", () => {
   beforeEach(() => {
@@ -14,16 +23,15 @@ describe("ContactSection", () => {
 
   it("renders form fields", () => {
     render(<ContactSection />);
-    expect(screen.getByPlaceholderText("Your name")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/your name/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText("your@email.com")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Tell me about your project…")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/tell me about your project/i)).toBeInTheDocument();
   });
 
-  it("renders contact info (email, phone, location)", () => {
+  it("renders contact info (email, location)", () => {
     render(<ContactSection />);
     expect(screen.getByText("mdehtesham313@gmail.com")).toBeInTheDocument();
-    expect(screen.getByText("+91-8340711589")).toBeInTheDocument();
-    expect(screen.getByText("Bhopal, Madhya Pradesh, India")).toBeInTheDocument();
+    expect(screen.getByText("Bhopal, India")).toBeInTheDocument();
   });
 
   it("renders GitHub and LinkedIn links", () => {
@@ -35,20 +43,16 @@ describe("ContactSection", () => {
   });
 
   it("shows success message on submit", async () => {
-    const mockFetch = vi.fn().mockResolvedValue({ ok: true });
+    const mockFetch = vi.fn().mockResolvedValue({ ok: true, status: 200 });
     vi.stubGlobal("fetch", mockFetch);
 
     render(<ContactSection />);
-
     const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText("Your name"), "Test");
-    await user.type(screen.getByPlaceholderText("your@email.com"), "test@test.com");
-    await user.type(screen.getByPlaceholderText("Tell me about your project…"), "This is a test message.");
-
+    await fillForm(user);
     await user.click(screen.getByText("Send Message"));
 
     await waitFor(() => {
-      expect(screen.getByText("Sent!")).toBeInTheDocument();
+      expect(screen.getByText(/message sent successfully/i)).toBeInTheDocument();
     });
 
     expect(mockFetch).toHaveBeenCalledOnce();
@@ -59,16 +63,12 @@ describe("ContactSection", () => {
     vi.stubGlobal("fetch", mockFetch);
 
     render(<ContactSection />);
-
     const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText("Your name"), "Test");
-    await user.type(screen.getByPlaceholderText("your@email.com"), "test@test.com");
-    await user.type(screen.getByPlaceholderText("Tell me about your project…"), "This is a test message.");
-
+    await fillForm(user);
     await user.click(screen.getByText("Send Message"));
 
     await waitFor(() => {
-      expect(screen.getByText("Something went wrong. Please try again.")).toBeInTheDocument();
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
     });
   });
 
@@ -77,16 +77,12 @@ describe("ContactSection", () => {
     vi.stubGlobal("fetch", mockFetch);
 
     render(<ContactSection />);
-
     const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText("Your name"), "Test");
-    await user.type(screen.getByPlaceholderText("your@email.com"), "test@test.com");
-    await user.type(screen.getByPlaceholderText("Tell me about your project…"), "This is a test message.");
-
+    await fillForm(user);
     await user.click(screen.getByText("Send Message"));
 
     await waitFor(() => {
-      expect(screen.getByText("Too many requests. Please try again later.")).toBeInTheDocument();
+      expect(screen.getByText(/too many messages/i)).toBeInTheDocument();
     });
   });
 });

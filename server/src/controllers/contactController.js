@@ -28,6 +28,8 @@ export const handleContactForm = async (req, res) => {
 
     const safeName = sanitize(name);
     const safeEmail = sanitize(email);
+    const htmlName = escapeHTML(safeName);
+    const htmlEmail = escapeHTML(safeEmail);
     const safeMessage = escapeHTML(message);
 
     const mailOptions = {
@@ -39,8 +41,8 @@ export const handleContactForm = async (req, res) => {
       html: `
         <div style="font-family: monospace; border: 1px solid #10b981; padding: 20px; border-radius: 10px;">
           <h3 style="color: #10b981;">> NEW_MESSAGE_RECEIVED</h3>
-          <p><strong>NAME:</strong> ${safeName}</p>
-          <p><strong>EMAIL:</strong> ${safeEmail}</p>
+          <p><strong>NAME:</strong> ${htmlName}</p>
+          <p><strong>EMAIL:</strong> ${htmlEmail}</p>
           <hr style="border: 0.5px solid #333;" />
           <p><strong>MESSAGE:</strong></p>
           <p style="white-space: pre-wrap;">${safeMessage}</p>

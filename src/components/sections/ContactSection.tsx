@@ -1,157 +1,251 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Container from "@/components/ui/Container";
+import SectionHeader from "@/components/ui/SectionHeader";
+import GlassButton from "@/components/ui/glass/GlassButton";
+import { blurUp, staggerContainer } from "@/lib/motion";
+
+type Status = "idle" | "sending" | "success" | "error" | "ratelimit";
 
 export default function ContactSection() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error" | "ratelimit">("idle");
+  const [status, setStatus] = useState<Status>("idle");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+    company: "", // honeypot
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    const formData = new FormData(e.currentTarget);
-    const payload = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-    };
+
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") || "http://localhost:5000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const response = await fetch(`${apiUrl}/api/contact/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(formData),
       });
+
+      if (response.status === 429) {
+        setStatus("ratelimit");
+        return;
+      }
+
       if (response.ok) {
         setStatus("success");
-        (e.target as HTMLFormElement).reset();
-      } else if (response.status === 429) {
-        setStatus("ratelimit");
+        setFormData({ name: "", email: "", message: "", company: "" });
+        setTimeout(() => setStatus("idle"), 5000);
       } else {
         setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
       }
     } catch {
       setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const inputClasses =
+    "w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-foreground placeholder:text-faint outline-none transition-colors duration-300 focus:border-accent/60 focus:bg-white/[0.06]";
+
   return (
-    <section className="py-16">
+    <section className="relative pb-24 md:pb-32">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          className="space-y-14"
+        >
+          <motion.div variants={blurUp}>
+            <SectionHeader
+              eyebrow="Contact"
+              title={
+                <>
+                  Let&apos;s build something{" "}
+                  <span className="text-accent-gradient">worth shipping.</span>
+                </>
+              }
+              description="Have a project in mind, or just want to talk shop? My inbox is open."
+            />
+          </motion.div>
 
-          {/* LEFT */}
-          <div className="space-y-8">
-            <div>
-              <p className="text-xs text-violet-400 font-mono uppercase tracking-widest mb-3">Contact</p>
-              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-                Let's build<br />
-                <span className="gradient-text">something together.</span>
-              </h2>
-            </div>
-            <p className="text-slate-400 leading-relaxed max-w-sm">
-              Have a project in mind or want to discuss backend architectures? I'm open to
-              collaborating on innovative platforms and systems-level tools.
-            </p>
-
-            <div className="space-y-4">
-              {[
-                { label: "Email", value: "mdehtesham313@gmail.com", href: "mailto:mdehtesham313@gmail.com" },
-                { label: "Phone", value: "+91-8340711589", href: "tel:+918340711589" },
-                { label: "Location", value: "Bhopal, Madhya Pradesh, India", href: null },
-              ].map((c) => (
-                <div key={c.label} className="flex gap-4 items-center">
-                  <span className="text-xs text-violet-400 font-mono w-16">{c.label}</span>
-                  {c.href ? (
-                    <a href={c.href} className="text-sm text-slate-300 hover:text-white transition-colors">
-                      {c.value}
-                    </a>
-                  ) : (
-                    <span className="text-sm text-slate-400">{c.value}</span>
-                  )}
+          <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
+            <motion.div variants={blurUp}>
+              <div className="glass flex h-full flex-col justify-center gap-8 rounded-3xl p-8 lg:p-10">
+                <div>
+                  <h3 className="font-mono text-[11px] tracking-[0.2em] text-faint uppercase">
+                    Email
+                  </h3>
+                  <a
+                    href="mailto:mdehtesham313@gmail.com"
+                    className="mt-2 block text-lg font-semibold tracking-tight break-all text-foreground transition-colors hover:text-teal"
+                  >
+                    mdehtesham313@gmail.com
+                  </a>
                 </div>
-              ))}
-            </div>
+                <div>
+                  <h3 className="font-mono text-[11px] tracking-[0.2em] text-faint uppercase">
+                    Location
+                  </h3>
+                  <p className="mt-2 text-lg font-semibold tracking-tight text-foreground">
+                    Bhopal, India
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-mono text-[11px] tracking-[0.2em] text-faint uppercase">
+                    Social
+                  </h3>
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    {[
+                      { name: "GitHub", url: "https://github.com/md-ehtesham57" },
+                      { name: "LinkedIn", url: "https://www.linkedin.com/in/md-ehtesham-153344259/" },
+                    ].map((social) => (
+                      <a
+                        key={social.name}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="glass-subtle rounded-full px-4 py-2 text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
+                      >
+                        {social.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                <p className="flex items-center gap-2.5 font-mono text-xs text-faint">
+                  <span className="h-1.5 w-1.5 rounded-full bg-teal" />
+                  Usually replies within 24 hours
+                </p>
+              </div>
+            </motion.div>
 
-            <div className="flex gap-4 pt-2">
-              <a
-                href="https://github.com/md-ehtesham57"
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all"
+            <motion.div variants={blurUp}>
+              <form
+                onSubmit={handleSubmit}
+                className="glass h-full space-y-6 rounded-3xl p-8 lg:p-10"
               >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/md-ehtesham-153344259/"
-                target="_blank"
-                className="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                LinkedIn
-              </a>
-            </div>
-          </div>
-
-          {/* RIGHT — Form */}
-          <div className="relative">
-            <div className="absolute -inset-4 bg-violet-600/5 blur-3xl rounded-full pointer-events-none" />
-            <div className="relative rounded-2xl border border-white/8 bg-[#111627]/80 backdrop-blur-xl p-8">
-              <h3 className="text-sm font-semibold text-white mb-6">
-                {status === "success" ? "Message sent ✓" : "Send a message"}
-              </h3>
-
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1.5">Name</label>
-                  <input
-                    name="name" required type="text"
-                    onChange={() => status !== "idle" && setStatus("idle")}
-                    placeholder="Your name"
-                    className="w-full bg-white/[0.04] border border-white/8 focus:border-violet-500/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1.5">Email</label>
-                  <input
-                    name="email" required type="email"
-                    onChange={() => status !== "idle" && setStatus("idle")}
-                    placeholder="your@email.com"
-                    className="w-full bg-white/[0.04] border border-white/8 focus:border-violet-500/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-slate-500 mb-1.5">Message</label>
-                  <textarea
-                    name="message" required rows={4}
-                    onChange={() => status !== "idle" && setStatus("idle")}
-                    placeholder="Tell me about your project…"
-                    className="w-full bg-white/[0.04] border border-white/8 focus:border-violet-500/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition-all resize-none"
-                  />
-                </div>
-
                 {/* Honeypot */}
-                <input type="text" name="company" tabIndex={-1} autoComplete="off"
-                  className="absolute -left-[9999px] opacity-0 pointer-events-none" />
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className="hidden"
+                  aria-hidden="true"
+                  tabIndex={-1}
+                />
 
-                <button
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="contact-name"
+                      className="mb-2 block font-mono text-[11px] tracking-[0.2em] text-faint uppercase"
+                    >
+                      Name
+                    </label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      minLength={2}
+                      maxLength={50}
+                      className={inputClasses}
+                      placeholder="Your name..."
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="contact-email"
+                      className="mb-2 block font-mono text-[11px] tracking-[0.2em] text-faint uppercase"
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className={inputClasses}
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-message"
+                    className="mb-2 block font-mono text-[11px] tracking-[0.2em] text-faint uppercase"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    minLength={10}
+                    maxLength={1000}
+                    rows={5}
+                    className={`${inputClasses} resize-none`}
+                    placeholder="Tell me about your project..."
+                  />
+                </div>
+
+                <GlassButton
                   type="submit"
-                  disabled={status === "sending" || status === "success"}
-                  className="w-full py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-all duration-200 shadow-[0_0_20px_rgba(124,58,237,0.25)] hover:shadow-[0_0_30px_rgba(124,58,237,0.4)] disabled:opacity-60 disabled:cursor-not-allowed"
+                  disabled={status === "sending"}
+                  className="w-full py-4"
                 >
-                  {status === "sending" ? "Sending…" : status === "success" ? "Sent!" : "Send Message"}
-                </button>
+                  {status === "sending" ? "Sending..." : "Send Message"}
+                </GlassButton>
 
-                {status === "error" && (
-                  <p className="text-red-400 text-xs text-center">Something went wrong. Please try again.</p>
+                {status === "success" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-teal/25 bg-teal/10 px-4 py-3.5 text-center text-sm font-medium text-teal"
+                  >
+                    Message sent successfully! I&apos;ll get back to you soon.
+                  </motion.div>
                 )}
                 {status === "ratelimit" && (
-                  <p className="text-yellow-400 text-xs text-center">Too many requests. Please try again later.</p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3.5 text-center text-sm font-medium text-amber-300"
+                  >
+                    Too many messages. Please wait a few minutes.
+                  </motion.div>
+                )}
+                {status === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-rose/25 bg-rose/10 px-4 py-3.5 text-center text-sm font-medium text-rose"
+                  >
+                    Something went wrong. Please try again or email me directly.
+                  </motion.div>
                 )}
               </form>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

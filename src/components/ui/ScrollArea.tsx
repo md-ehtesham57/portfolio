@@ -52,31 +52,6 @@ export default function ScrollArea({
     }
   }, []);
 
-  // ── Canvas particle loop ──────────────────────────────────────────────
-  const animateParticles = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.current = particles.current.filter(p => p.opacity > 0.02);
-
-    for (const p of particles.current) {
-      p.y       -= p.speed;
-      p.opacity *= 0.93;
-
-      ctx.beginPath();
-      ctx.arc(canvas.width / 2, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle   = `rgba(0, 255, 136, ${p.opacity})`;
-      ctx.shadowColor = "#00ff88";
-      ctx.shadowBlur  = 6;
-      ctx.fill();
-    }
-
-    particleRaf.current = requestAnimationFrame(animateParticles);
-  }, []);
-
   // ── Main updater (DOM-direct, zero state) ─────────────────────────────
   const updateThumb = useCallback(() => {
     const container = containerRef.current;
@@ -135,9 +110,38 @@ export default function ScrollArea({
 
   // ── Particle loop ─────────────────────────────────────────────────────
   useEffect(() => {
-    particleRaf.current = requestAnimationFrame(animateParticles);
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
+    const canvasEl = canvas;
+    const context = ctx;
+
+    function animate() {
+      context.clearRect(0, 0, canvasEl.width, canvasEl.height);
+
+      const next: Particle[] = [];
+      for (const p of particles.current) {
+        const opacity = p.opacity * 0.93;
+        if (opacity <= 0.02) continue;
+        const y = p.y - p.speed;
+        next.push({ ...p, y, opacity });
+
+        context.beginPath();
+        context.arc(canvasEl.width / 2, y, p.size, 0, Math.PI * 2);
+        context.fillStyle   = `rgba(0, 255, 136, ${opacity})`;
+        context.shadowColor = "#00ff88";
+        context.shadowBlur  = 6;
+        context.fill();
+      }
+      particles.current = next;
+
+      particleRaf.current = requestAnimationFrame(animate);
+    }
+
+    particleRaf.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(particleRaf.current);
-  }, [animateParticles]);
+  }, []);
 
   // ── Canvas sizing — reads actual track width for mobile accuracy ──────
   useEffect(() => {

@@ -1,9 +1,17 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Navbar from "@/components/ui/Navbar";
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+}));
 
 describe("Navbar", () => {
   beforeEach(() => {
-    window.scrollY = 0;
+    Object.defineProperty(window, "scrollY", {
+      value: 0,
+      writable: true,
+      configurable: true,
+    });
   });
 
   it("renders nav links", () => {
@@ -13,30 +21,36 @@ describe("Navbar", () => {
     expect(screen.getByText("Contact")).toBeInTheDocument();
   });
 
-  it("renders name and logo", () => {
+  it("renders logo initials", () => {
     render(<Navbar />);
-    expect(screen.getByText("Md Ehtesham")).toBeInTheDocument();
+    expect(screen.getByText("ME")).toBeInTheDocument();
   });
 
-  it("renders Resume link", () => {
+  it("renders Resume link pointing to the PDF", () => {
     render(<Navbar />);
-    const resume = screen.getByText("Resume ↗");
+    const resume = screen.getByText("Resume");
     expect(resume).toBeInTheDocument();
-    expect(resume).toHaveAttribute("href", "https://drive.google.com/file/d/1UD9L8CUSec80CgJDIthZriHQa3ih9dB6/view?usp=sharing");
+    expect(resume).toHaveAttribute("href", "/resume.pdf");
   });
 
-  it("toggles mobile menu on hamburger click", () => {
+  it("toggles mobile menu on hamburger click", async () => {
     render(<Navbar />);
     const toggle = screen.getByRole("button");
-    expect(screen.queryByText("Download Resume ↗")).not.toBeInTheDocument();
+    expect(screen.getAllByText("Resume")).toHaveLength(1);
     fireEvent.click(toggle);
-    expect(screen.getByText("Download Resume ↗")).toBeInTheDocument();
+    expect(screen.getAllByText("Resume")).toHaveLength(2);
     fireEvent.click(toggle);
-    expect(screen.queryByText("Download Resume ↗")).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getAllByText("Resume")).toHaveLength(1)
+    );
   });
 
-  it("adds scrolled class when scrolled past 20px", () => {
-    render(<Navbar />);
-    fireEvent.scroll(window, { target: { scrollY: 100 } });
+  it("marks itself scrolled after scrolling past the threshold", () => {
+    const { container } = render(<Navbar />);
+    const nav = container.firstChild as HTMLElement;
+    expect(nav.getAttribute("data-scrolled")).toBe("false");
+    window.scrollY = 100;
+    fireEvent.scroll(window);
+    expect(nav.getAttribute("data-scrolled")).toBe("true");
   });
 });

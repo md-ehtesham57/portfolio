@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeAll } from "vitest";
 import request from "supertest";
+import transporter from "../config/mail.js";
 
 // Mock nodemailer before importing the app
 vi.mock("nodemailer", () => ({
@@ -78,5 +79,22 @@ describe("POST /api/contact/send", () => {
 
     expect(res.status).toBe(400);
     expect(res.body.error).toBe("validation_failed");
+  });
+
+  it("escapes HTML in the email body", async () => {
+    const res = await request(app)
+      .post("/api/contact/send")
+      .send({
+        name: "<img src=x onerror=alert(1)>",
+        email: "test@example.com",
+        message: "Hello <script>alert(1)</script> world",
+      });
+
+    expect(res.status).toBe(200);
+
+    const mail = transporter.sendMail.mock.calls.at(-1)[0];
+    expect(mail.html).not.toContain("<img src=x");
+    expect(mail.html).not.toContain("<script>");
+    expect(mail.html).toContain("&lt;script&gt;");
   });
 });

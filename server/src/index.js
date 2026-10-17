@@ -8,6 +8,8 @@ import contactRoutes from "./routes/contactRoutes.js";
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,

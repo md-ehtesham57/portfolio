@@ -18,7 +18,7 @@ describe("projects data", () => {
       expect(p.description).toBeTruthy();
       expect(p.tech.length).toBeGreaterThan(0);
       expect(p.accent).toMatch(/^#[0-9a-fA-F]{6}$/);
-      expect(["Full-Stack", "Frontend", "Design"]).toContain(p.tag);
+      expect(["Full-Stack", "Frontend", "Design", "Internship"]).toContain(p.tag);
     }
   });
 

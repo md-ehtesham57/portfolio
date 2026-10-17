@@ -11,11 +11,12 @@ describe("Container", () => {
     expect(screen.getByText("Hello")).toBeInTheDocument();
   });
 
-  it("renders with max-w-6xl mx-auto px-6 classes", () => {
+  it("renders centered with responsive padding classes", () => {
     const { container } = render(<Container>content</Container>);
     const div = container.firstChild as HTMLElement;
-    expect(div.className).toContain("max-w-6xl");
+    expect(div.className).toMatch(/max-w-\w+/);
     expect(div.className).toContain("mx-auto");
-    expect(div.className).toContain("px-6");
+    expect(div.className).toContain("px-4");
+    expect(div.className).toContain("sm:px-6");
   });
 });

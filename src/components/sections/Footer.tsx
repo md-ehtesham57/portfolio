@@ -1,55 +1,73 @@
 import Link from "next/link";
+import Container from "@/components/ui/Container";
 
 export default function Footer() {
   return (
-    <footer className="py-16 px-6 relative">
-      <div className="max-w-6xl mx-auto">
-        <div className="relative rounded-2xl border border-white/10 bg-[#111627]/80 backdrop-blur-xl px-8 py-8 shadow-[0_0_30px_rgba(124,58,237,0.04)]">
-
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-
-            {/* Brand */}
+    <footer className="relative pt-8 pb-10">
+      <Container>
+        <div className="glass rounded-3xl px-8 py-10">
+          <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
             <div className="text-center md:text-left">
-              <p className="text-white font-semibold text-lg">
-                Md Ehtesham<span className="text-violet-400 animate-pulse">_</span>
+              <p className="text-lg font-semibold tracking-tight text-foreground">
+                Md Ehtesham<span className="text-accent">.</span>
               </p>
-              <p className="text-slate-500 text-sm mt-1">Backend Developer</p>
+              <p className="mt-1 text-sm text-faint">
+                Full-stack developer — Bhopal, India
+              </p>
             </div>
 
-            {/* Nav */}
-            <div className="flex flex-wrap justify-center gap-6 text-sm">
-              <Link href="/projects" className="text-slate-400 hover:text-violet-300 transition-colors">Projects</Link>
-              <Link href="/about"    className="text-slate-400 hover:text-violet-300 transition-colors">About</Link>
-              <Link href="/contact"  className="text-slate-400 hover:text-violet-300 transition-colors">Contact</Link>
-            </div>
+            <nav className="flex flex-wrap justify-center gap-6 text-sm">
+              <Link
+                href="/projects"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Projects
+              </Link>
+              <Link
+                href="/about"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                About
+              </Link>
+              <Link
+                href="/contact"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Contact
+              </Link>
+            </nav>
 
-            {/* Social */}
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               <a
                 href="https://github.com/md-ehtesham57"
                 target="_blank"
-                className="flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all"
+                rel="noopener noreferrer"
+                className="glass-subtle rounded-full px-4 py-2 text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
               >
                 GitHub
               </a>
               <a
                 href="https://www.linkedin.com/in/md-ehtesham-153344259/"
                 target="_blank"
-                className="flex items-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-white border border-white/10 hover:border-white/20 rounded-xl transition-all"
+                rel="noopener noreferrer"
+                className="glass-subtle rounded-full px-4 py-2 text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
               >
                 LinkedIn
               </a>
             </div>
           </div>
 
-          <div className="my-7 h-px bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+          <div className="my-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-          <div className="text-center text-xs text-slate-600" suppressHydrationWarning>
-            © {new Date().getFullYear()} Md Ehtesham — Built with Next.js &amp; Tailwind CSS
-          </div>
-
+          <p
+            className="text-center font-mono text-xs text-faint"
+            suppressHydrationWarning
+          >
+            © {new Date().getFullYear()} Md Ehtesham · Built with Next.js,
+            Tailwind CSS &amp; Framer Motion
+          </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }
